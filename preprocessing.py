@@ -77,3 +77,26 @@ def standardize_dataframe(df):
     #convert numpy array back into dataframe
     std_df = pd.DataFrame(data=std_arr, index=df.index.values, columns=features)
     return std_df
+
+def standardize_dataframe_pickle(df):
+    """
+    A function to standardize data - zero mean, unit variance
+    This function uses saved scaler
+    Arguments: 
+        df - dataframe to standardize
+    Returns:
+        std_df - standardized dataframe
+    """
+
+    with open('std_scaler.sav', 'rb') as pickle_file_std_scaler:
+        std_scaler = pickle.load(pickle_file_std_scaler)
+
+    #get all features
+    features = list(df.columns.values[1:])
+    #separate out features
+    df_sep = df.loc[:, features].values
+    #standardizing the features
+    std_arr = std_scaler.transform(df_sep)
+    #convert numpy array back into dataframe
+    std_df = pd.DataFrame(data=std_arr, index=df.index.values, columns=features)
+    return std_df

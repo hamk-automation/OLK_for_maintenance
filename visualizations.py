@@ -1,11 +1,13 @@
-import preprocessing as pp 
-import pandas as pd 
-import numpy as np 
-import pca 
-import matplotlib.pyplot as plt 
+import preprocessing as pp
+import pandas as pd
+import numpy as np
+import pca
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import metrics
-import clustering 
-import datetime as dt    
+import clustering
+import datetime as dt
+
 
 def clustering_plt(cls_df, cop_df, n_pca):
     """
@@ -18,11 +20,13 @@ def clustering_plt(cls_df, cop_df, n_pca):
         None
     """
 
-    time_cls = cls_df.index.values 
-    dt_time_cls = [dt.datetime.strptime(t[:18], '%Y-%m-%dT%H:%M:%S') for t in time_cls]
+    time_cls = cls_df.index.values
+    dt_time_cls = [dt.datetime.strptime(
+        t[:18], '%Y-%m-%dT%H:%M:%S') for t in time_cls]
 
     time_cop = cop_df.index.values
-    dt_time_cop = [dt.datetime.strptime(t[:18], '%Y-%m-%dT%H:%M:%S') for t in time_cop]
+    dt_time_cop = [dt.datetime.strptime(
+        t[:18], '%Y-%m-%dT%H:%M:%S') for t in time_cop]
 
     plt.title('Principal component analysis')
     for plot in range(1, n_pca + 1):
@@ -37,4 +41,7 @@ def clustering_plt(cls_df, cop_df, n_pca):
     plt.subplot(n_pca + 2, 1, n_pca + 2)
     plt.plot(dt_time_cls, cls_df['class'])
     plt.ylabel('Class')
-    plt.show()
+    # print(dt_time_cls)
+    # fig = plt.figure()   
+    # ax = fig.add_subplot(1, 2, 1, projection='3d')
+    plt.show(block='false')

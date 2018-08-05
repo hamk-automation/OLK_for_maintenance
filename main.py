@@ -17,8 +17,8 @@ import pickle
 def main():
     df = pp.load_folder('data')
     df = pp.standardize_dataframe(df)
-    df_pca, ratios = pca.pca(df, 10)
-    cls_df = clustering.cluster(df_pca, 5)
+    df_pca, ratios = pca.pca(df, 3)
+    cls_df = clustering.cluster(df_pca, 5, plot_clustering=True)
     df_main = pd.concat([df, df_pca], axis=1)
     df_corr = df_main.corr()
     df_corr.to_csv('corr.csv', sep=";")

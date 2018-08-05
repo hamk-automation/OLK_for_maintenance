@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import datetime as dt  
 import pickle
 
-def pca(input_dataframe, n):
+def pca(input_dataframe, n, plot_pca=False):
     """
     Performes pca decomposition. It is used for dimensionality reduction. 
     The funcion also plots new principal components and saves pca parameters for a future use. 
@@ -33,17 +33,18 @@ def pca(input_dataframe, n):
     pca_dataframe = pd.DataFrame(data = components, index=time, columns=['Principal Component ' + str(i) for i in range(1, n+1)])
 
     #plotting pca components
-    plt.title('Principal component analysis')
-    for plot in range(1, n+1):
-        plt.subplot(n, 1, plot)
-        plt.plot(dt_time, pca_dataframe['Principal Component ' + str(plot)])
-        plt.ylabel('Principal Component ' + str(plot))
-    plt.show()
+    if plot_pca:
+        plt.title('Principal component analysis')
+        for plot in range(1, n+1):
+            plt.subplot(n, 1, plot)
+            plt.plot(dt_time, pca_dataframe['Principal Component ' + str(plot)])
+            plt.ylabel('Principal Component ' + str(plot))
+        plt.show()
 
     return pca_dataframe, pca_model.explained_variance_ratio_
 
 
-def pca_pickle(input_dataframe):
+def pca_pickle(input_dataframe,  plot_pca=False):
     """
     Performes pca decomposition. It is used for dimensionality reduction. 
     The funcion uses previously saved pca model 
@@ -64,12 +65,13 @@ def pca_pickle(input_dataframe):
     pca_dataframe = pd.DataFrame(data = components, index=time, columns=['Principal Component ' + str(i) for i in range(1, 5)])
 
     #plotting pca components
-    plt.title('Principal component analysis')
-    for plot in range(1, 5):
-        plt.subplot(4, 1, plot)
-        plt.plot(dt_time, pca_dataframe['Principal Component ' + str(plot)])
-        plt.ylabel('Principal Component ' + str(plot))
-    plt.show()
+    if plot_pca:
+        plt.title('Principal component analysis')
+        for plot in range(1, 5):
+            plt.subplot(4, 1, plot)
+            plt.plot(dt_time, pca_dataframe['Principal Component ' + str(plot)])
+            plt.ylabel('Principal Component ' + str(plot))
+        plt.show()
 
     return pca_dataframe
 

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pca
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from mpl_toolkits.mplot3d import Axes3D
 import metrics
 import clustering
@@ -19,6 +20,7 @@ def clustering_plt(cls_df, cop_df, n_pca):
     Returns:
         None
     """
+    # plt.close('all')
 
     time_cls = cls_df.index.values
     dt_time_cls = [dt.datetime.strptime(
@@ -28,20 +30,22 @@ def clustering_plt(cls_df, cop_df, n_pca):
     dt_time_cop = [dt.datetime.strptime(
         t[:18], '%Y-%m-%dT%H:%M:%S') for t in time_cop]
 
-    plt.title('Principal component analysis')
-    for plot in range(1, n_pca + 1):
-        plt.subplot(n_pca + 2, 1, plot)
-        plt.plot(dt_time_cls, cls_df['Principal Component ' + str(plot)])
-        plt.ylabel('Principal Component ' + str(plot))
+    fig, axarr = plt.subplots(n_pca+2,1)
+    plt.suptitle('Principal component analysis');
+    for plot in range(1, n_pca):
+        # plt.subplot(n_pca + 2, 1, plot)
+        axarr[plot-1].plot(dt_time_cls, cls_df['Principal Component ' + str(plot)])
+        axarr[plot-1].set_ylabel('PC' + str(plot))
+        axarr[plot-1].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
 
-    plt.subplot(n_pca + 2, 1, n_pca + 1)
-    plt.plot(dt_time_cop, cop_df.values)
-    plt.ylabel('COP of the heat pump')
+    axarr[n_pca-1].plot(dt_time_cop, cop_df.values)
+    axarr[n_pca-1].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
+    axarr[n_pca-1].set_ylabel('COP')
 
-    plt.subplot(n_pca + 2, 1, n_pca + 2)
-    plt.plot(dt_time_cls, cls_df['class'])
-    plt.ylabel('Class')
+    axarr[n_pca].plot(dt_time_cls, cls_df['class'])
+    axarr[n_pca].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
+    axarr[n_pca].set_ylabel('Class')
     # print(dt_time_cls)
     # fig = plt.figure()   
     # ax = fig.add_subplot(1, 2, 1, projection='3d')
-    plt.show(block='false')
+    plt.show()

@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 import preprocessing as pp 
 import pickle
 
-def cluster(dataframe, n_cluster):
+def cluster(dataframe, n_cluster, plot_clustering = False):
     """
     The function performes kmeans clustering on the input dataframe.
     It also plots graphs to show clustering on a 2d figure(only first 2 dimensions are used for displaying, but all for clustering)
@@ -25,11 +25,12 @@ def cluster(dataframe, n_cluster):
     classes_df = pd.concat([dataframe, classes], axis=1)
     #export kmeans model for a future use 
     pickle.dump(kmeans, open("kmeans_model.sav", 'wb'))
-
-    plt.scatter(dataframe[dataframe.columns.values[0]], dataframe[dataframe.columns.values[1]], c=classes_df['class'])
-    plt.show()
+    if plot_clustering:
+        plt.scatter(dataframe[dataframe.columns.values[0]], dataframe[dataframe.columns.values[1]], c=classes_df['class'])
+        plt.draw()
     return classes_df
-def cluster_pickle(dataframe):
+
+def cluster_pickle(dataframe, plot_clustering = False):
     """
     Performes kmeans clustering on the input dataframe using previously saved model,
     
@@ -46,7 +47,7 @@ def cluster_pickle(dataframe):
     classes_df = pd.concat([dataframe, classes], axis=1)
     #export kmeans model for a future use 
     pickle.dump(kmeans, open("kmeans_model.sav", 'wb'))
-
-    plt.scatter(dataframe[dataframe.columns.values[0]], dataframe[dataframe.columns.values[1]], c=classes_df['class'])
-    plt.show()
+    if plot_clustering:
+        plt.scatter(dataframe[dataframe.columns.values[0]], dataframe[dataframe.columns.values[1]], c=classes_df['class'])
+        plt.draw()
     return classes_df

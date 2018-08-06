@@ -17,13 +17,13 @@ import pickle
 def main():
     df = pp.load_folder('data')
     df = pp.standardize_dataframe(df)
-    df_pca, ratios = pca.pca(df, 3)
-    cls_df = clustering.cluster(df_pca, 5, plot_clustering=True)
+    df_pca, ratios = pca.pca(df, 4)
+    cls_df = clustering.cluster(df, df_pca, 2, plot_clustering=False)
     df_main = pd.concat([df, df_pca], axis=1)
     df_corr = df_main.corr()
     df_corr.to_csv('corr.csv', sep=";")
     cop = metrics.calc_test_cop()
-    vs.clustering_plt(cls_df, cop, 4)
+    vs.clustering_plt(cls_df, cop, 2)
     out = series_to_supervised(df_pca.values, 96, 1, dropnan=True)
     train_y = out[out.columns[-4:]]
     train_x = out[out.columns[:-4]]

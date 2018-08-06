@@ -32,19 +32,19 @@ def clustering_plt(cls_df, cop_df, n_pca):
 
     fig, axarr = plt.subplots(n_pca+2,1)
     plt.suptitle('Principal component analysis');
-    for plot in range(1, n_pca):
+    for plot in range(1, n_pca+1):
         # plt.subplot(n_pca + 2, 1, plot)
         axarr[plot-1].plot(dt_time_cls, cls_df['Principal Component ' + str(plot)])
         axarr[plot-1].set_ylabel('PC' + str(plot))
         axarr[plot-1].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
 
-    axarr[n_pca-1].plot(dt_time_cop, cop_df.values)
-    axarr[n_pca-1].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
-    axarr[n_pca-1].set_ylabel('COP')
-
-    axarr[n_pca].plot(dt_time_cls, cls_df['class'])
+    axarr[n_pca].plot(dt_time_cop, cop_df.values)
     axarr[n_pca].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
-    axarr[n_pca].set_ylabel('Class')
+    axarr[n_pca].set_ylabel('COP')
+
+    axarr[n_pca+1].plot(dt_time_cls, cls_df['class'])
+    axarr[n_pca+1].fmt_xdata = mdates.DateFormatter('%Y-%m-%d %H:%M')
+    axarr[n_pca+1].set_ylabel('Class')
     # print(dt_time_cls)
     # fig = plt.figure()   
     # ax = fig.add_subplot(1, 2, 1, projection='3d')

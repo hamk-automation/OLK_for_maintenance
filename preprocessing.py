@@ -50,7 +50,7 @@ def load_folder(folder_name):
     dataframe = pd.concat(df_list, axis=1, sort=False)
     #remove all rows with only zero values
     dataframe = dataframe.loc[(dataframe != 0).any(axis=1)]
-
+    print('load folder df: ', dataframe.columns)
     return dataframe
 
 
@@ -64,7 +64,7 @@ def standardize_dataframe(df):
         std_df - standardized dataframe
     """
     #get all features
-    features = list(df.columns.values[1:])
+    features = list(df.columns.values[0:])
     #separate out features
     df_sep = df.loc[:, features].values
     scaler = StandardScaler(copy=True, with_mean=True, with_std=True)
@@ -92,7 +92,7 @@ def standardize_dataframe_pickle(df):
         std_scaler = pickle.load(pickle_file_std_scaler)
 
     #get all features
-    features = list(df.columns.values[1:])
+    features = list(df.columns.values[0:])
     #separate out features
     df_sep = df.loc[:, features].values
     #standardizing the features

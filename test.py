@@ -1,8 +1,10 @@
 import two_step_pca as TS_PCA 
 import pandas as pd 
 from sklearn.preprocessing import StandardScaler
+import preprocessing as pp 
 
-df = pd.read_csv('clean_data.csv', index_col=0, sep=";")
+
+df = pp.load_folder('test_data')
 #limiting the amount of data, so you can check at least something visually
 #it is a litle bit complicated to do then you have 20 columns initially and even more after time shifting (a lot more)
 data = df[df.columns.values[1:6]]

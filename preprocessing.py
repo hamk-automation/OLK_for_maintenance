@@ -28,8 +28,8 @@ def clean_dataframe(df, std_dev):
         clean_df - cleaned dataframe
     """
     clean_df = df.replace(to_replace='null', value=np.nan, inplace=False)
-    clean_df = clean_df.dropna(axis=0, how='any', inplace=False)
-    clean_df = clean_df[(np.abs(stats.zscore(clean_df)) < std_dev).all(axis=1)]
+    # clean_df = clean_df.dropna(axis=0, how='any', inplace=False)
+    # clean_df = clean_df[(np.abs(stats.zscore(clean_df)) < std_dev).all(axis=1)]
     return clean_df
 
 def load_folder(folder_name):
@@ -64,7 +64,7 @@ def standardize_dataframe(df):
         std_df - standardized dataframe
     """
     #get all features
-    features = list(df.columns.values[0:])
+    features = list(df.columns.values[1:])
     #separate out features
     df_sep = df.loc[:, features].values
     scaler = StandardScaler(copy=True, with_mean=True, with_std=True)

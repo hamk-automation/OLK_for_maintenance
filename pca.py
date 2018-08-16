@@ -24,6 +24,7 @@ def pca(input_dataframe, n, plot_pca=False):
     pca_model.fit(input_dataframe.values)
     print("Explained variance ratio: ")
     print(pca_model.explained_variance_ratio_)
+    print("Total feature retention: ", sum(pca_model.explained_variance_ratio_)*100, "%")
 
     #export pca_model for a future use
     pickle.dump(pca_model, open("pca_model.sav", 'wb'))
